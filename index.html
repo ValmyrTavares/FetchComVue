@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+   <button @click="puxarPaises">Mostrar Paises</button>
+   <select name="paises" v-model="paisSelecionado">
+        <option  v-for="pais in paises" :value="pais.name">{{pais.name}}
+        </option>
+    </select>
+ <p>Capital {{capital.capital}}</p>
+ <p>Região {{capital.region}}</p>
+ <p>População {{capital.population}} de Habitantes</p>
+ 
+      
+       
+   
+ 
+     </div>
+ 
+ 
+     <script>
+          const vm = new Vue(
+         {el:"#app",
+             data:{
+              paises:{},
+              paisSelecionado:"",
+              capital:""
+                 },
+                 methods:{
+                     puxarPaises(){
+                         fetch("https://restcountries.eu/rest/v2/all")
+                         .then(r => r.json())
+                         .then(r=> this.paises = r)
+                     }
+                 },
+                 watch:{
+                    paisSelecionado(){
+                        this.capital = this.paises.find((pais) => pais.name === this.paisSelecionado)
+                    }
+                 }
+                            
+             },
+          )
+       
+         
+              
+     
+                
+             
+ 
+    
+     </script>
+ </body>
+ </html>
+  
+    
+  
+    
+
